@@ -1,7 +1,7 @@
 # configured aws provider with proper credentials
 provider "aws" {
   region    = "us-east-1"
-  profile   = "yusuf"
+  profile   = "default"
 }
 
 
@@ -29,8 +29,8 @@ resource "aws_default_subnet" "default_az1" {
 
 
 # create security group for the ec2 instance
-resource "aws_security_group" "ec2_security_group" {
-  name        = "ec2 security group"
+resource "aws_security_group" "ec2_security_group1" {
+  name        = "ec2 security group1"
   description = "allow access on ports 8080 and 22"
   vpc_id      = aws_default_vpc.default_vpc.id
 
@@ -88,7 +88,7 @@ resource "aws_instance" "ec2_instance" {
   ami                    = data.aws_ami.ubuntu.id
   instance_type          = "t2.small"
   subnet_id              = aws_default_subnet.default_az1.id
-  vpc_security_group_ids = [aws_security_group.ec2_security_group.id]
+  vpc_security_group_ids = [aws_security_group1.ec2_security_group.id]
   key_name               = "devopskeypair"
 
   tags = {
